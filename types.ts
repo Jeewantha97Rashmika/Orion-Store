@@ -41,7 +41,7 @@ export interface AppItem {
 }
 
 export interface SocialLinks {
-  github: string;
+  github?: string;
   x: string;
   discord: string;
   coffee: string;
@@ -91,10 +91,13 @@ export interface StorePackage {
   id: string;
   tier: PackageTier;
   price: string;
+  sellPrice?: string;
+  discount?: string;
   name: string;
   description: string;
   features: string[];
   recommended?: boolean;
+  checkoutUrl: string;
 }
 
 export interface UserAccount {
@@ -103,6 +106,8 @@ export interface UserAccount {
   activatedOn?: string;
   licenseKey?: string;
   downloadCount: number;
+  totalSavingsMb: number; // For the "Storage Saved" dashboard stat
+  lastDownloadAt?: string;
 }
 
 export enum SortOption {

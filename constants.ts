@@ -20,7 +20,6 @@ export const CATEGORY_GRADIENTS: Record<string, string> = {
 export const MOCK_APPS: AppItem[] = [];
 
 export const DEV_SOCIALS = {
-  github: 'https://github.com/RookieEnough',
   x: 'https://x.com/_Rookie_Z',
   discord: 'https://discord.com/invite/CrM6y4ujnq',
   coffee: 'https://ko-fi.com/rookie_z'
@@ -38,7 +37,7 @@ export const DEFAULT_EASTER_EGG = 'https://www.youtube.com/watch?v=dQw4w9WgXcQ';
 export const DEFAULT_FAQS: FAQItem[] = [
   {
     question: "Is Pretub Store safe?",
-    answer: "Absolutely. Pretub Store is completely open-source. This means our code is public on GitHub for anyone to audit. We believe in transparency—no hidden trackers, no data mining, just a clean gateway to apps.",
+    answer: "Absolutely. Pretub Store is built with security and transparency in mind. We believe in being honest with our users—no hidden trackers, no data mining, just a clean gateway to apps.",
     icon: "fa-shield-cat"
   },
   {
@@ -73,12 +72,20 @@ export const MICROG_INFO_URL = 'https://microg.org/';
 
 import { StorePackage, PackageTier } from './types';
 
+// Production Mode & WooCommerce Configuration
+export const WOO_BASE_URL = 'https://buy.pretub.app'; // Change to your actual WooCommerce URL
+export const WOO_CHECKOUT_URL = `${WOO_BASE_URL}/checkout/?add-to-cart=`;
+export const WOO_API_ENDPOINT = `${WOO_BASE_URL}/wp-json/orion/v1/verify-purchase`; // Custom endpoint recommended
+
 export const STORE_PACKAGES: StorePackage[] = [
   {
     id: 'pkg_starter',
     tier: PackageTier.STARTER,
     name: 'Starter Bundle',
-    price: '$9.99',
+    price: '$19.99',
+    sellPrice: '$9.99',
+    discount: '50% OFF',
+    checkoutUrl: `${WOO_CHECKOUT_URL}918`, // Replace 101 with WooCommerce Product ID
     description: 'Perfect for casual users who want a clean app store experience.',
     features: [
       'Download up to 10 Apps',
@@ -91,7 +98,10 @@ export const STORE_PACKAGES: StorePackage[] = [
     id: 'pkg_pro',
     tier: PackageTier.PRO,
     name: 'Pro Collector',
-    price: '$19.99',
+    price: '$39.99',
+    sellPrice: '$19.99',
+    discount: '50% OFF',
+    checkoutUrl: `${WOO_CHECKOUT_URL}919`, // Replace 102 with WooCommerce Product ID
     description: 'Unlock premium mods and advanced developer features.',
     recommended: true,
     features: [
@@ -105,7 +115,10 @@ export const STORE_PACKAGES: StorePackage[] = [
     id: 'pkg_elite',
     tier: PackageTier.ELITE,
     name: 'Elite Guardian',
-    price: '$39.99',
+    price: '$79.99',
+    sellPrice: '$39.99',
+    discount: '50% OFF',
+    checkoutUrl: `${WOO_CHECKOUT_URL}920`, // Replace 103 with WooCommerce Product ID
     description: 'The ultimate toolkit for power users. All-in-one access.',
     features: [
       'Unlimited App Downloads',

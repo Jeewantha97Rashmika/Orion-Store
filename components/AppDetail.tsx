@@ -277,16 +277,37 @@ const AppDetail: React.FC<AppDetailProps> = ({
                 <button onClick={() => { Haptics.impact({ style: ImpactStyle.Light }); const subject = `Report Issue: ${app.name}`; window.location.href = `mailto:${supportEmail}?subject=${encodeURIComponent(subject)}`; }} className="w-10 h-10 rounded-full bg-theme-element/80 border border-theme-border backdrop-blur-md text-theme-sub flex items-center justify-center hover:text-red-500 transition-colors shadow-sm"><i className="fas fa-flag"></i></button>
             </div>
         </div>
-        <div className="px-6 pt-6 pb-6 flex gap-5 items-start">
-          <div className="relative shrink-0 w-24 h-24">
-             {iconStatus === 'loading' && <div className="absolute inset-0 bg-theme-element rounded-2xl animate-pulse" />}
-             {iconStatus === 'error' ? <div className={`w-full h-full rounded-2xl flex items-center justify-center text-white text-4xl font-bold shadow-inner ${bgGradient}`}>{app.name.charAt(0).toUpperCase()}</div> : <img src={getOptimizedImageUrl(app.icon, 200)} alt={app.name} onLoad={() => setIconStatus('loaded')} onError={() => setIconStatus('error')} className={`w-full h-full object-contain drop-shadow-md rounded-2xl transition-opacity duration-500 ${iconStatus === 'loaded' ? 'opacity-100' : 'opacity-0'}`} />}
+        <div className="px-6 pt-8 pb-6 flex gap-6 items-center">
+          <div className="relative shrink-0 w-24 h-24 group">
+             <div className="absolute inset-0 bg-primary/20 blur-2xl opacity-40 group-hover:opacity-100 transition-opacity"></div>
+             {iconStatus === 'loading' && <div className="absolute inset-0 bg-theme-element rounded-[2rem] animate-pulse" />}
+             {iconStatus === 'error' ? (
+                <div className={`w-full h-full rounded-[2rem] flex items-center justify-center text-white text-4xl font-black shadow-2xl ${bgGradient}`}>
+                    {app.name.charAt(0).toUpperCase()}
+                </div>
+             ) : (
+                <img 
+                    src={getOptimizedImageUrl(app.icon, 240)} 
+                    alt={app.name} 
+                    onLoad={() => setIconStatus('loaded')} 
+                    onError={() => setIconStatus('error')} 
+                    className={`w-full h-full object-contain drop-shadow-2xl rounded-[2rem] relative z-10 transition-all duration-500 ${iconStatus === 'loaded' ? 'opacity-100' : 'opacity-0'} group-hover:scale-105`} 
+                />
+             )}
           </div>
           <div className="flex-1 pt-1 min-w-0">
-              <h1 className="text-2xl font-black text-theme-text mb-1 leading-tight">{app.name}</h1>
-              <div className="flex flex-col gap-1">
-                  <div className="flex items-center gap-2"><span className="text-primary font-bold text-sm">{app.author}</span><i className="fas fa-check-circle text-acid text-xs"></i></div>
-                  {isExternalSource && <span className="inline-flex items-center gap-1 text-[10px] text-orange-500 font-bold uppercase tracking-wider mt-1"><i className="fas fa-external-link-alt"></i>Hosted on {externalDomain}</span>}
+              <h1 className="text-3xl font-black text-theme-text mb-1.5 tracking-tighter leading-tight">{app.name}</h1>
+              <div className="flex flex-col gap-1.5">
+                  <div className="flex items-center gap-2">
+                        <span className="text-primary font-black text-sm tracking-tight">{app.author}</span>
+                        <i className="fas fa-check-circle text-acid text-[10px] drop-shadow-[0_0_8px_rgba(200,255,0,0.5)]"></i>
+                  </div>
+                  {isExternalSource && (
+                    <span className="inline-flex items-center gap-1.5 text-[9px] text-orange-500 font-black uppercase tracking-widest bg-orange-500/10 px-2 py-0.5 rounded-md w-fit">
+                        <i className="fas fa-external-link-alt text-[8px]"></i>
+                        {externalDomain}
+                    </span>
+                  )}
               </div>
           </div>
         </div>
@@ -302,28 +323,25 @@ const AppDetail: React.FC<AppDetailProps> = ({
                  <span className="px-3 py-1 rounded-lg bg-green-500/10 text-green-600 dark:text-green-400 text-xs font-bold uppercase tracking-wide border border-green-500/20">Installed v{localVersion}</span>
              ) : null}
         </div>
-        <div className="px-6 mb-6">
-            <div className="flex items-center justify-between bg-card border border-theme-border rounded-2xl p-4 shadow-sm">
-                <div className="flex flex-col items-center flex-1 border-r border-theme-border"><span className="font-black text-theme-text text-lg">{app.platform === Platform.ANDROID ? <i className="fab fa-android text-green-500 text-2xl"></i> : <i className="fab fa-windows text-blue-500 text-2xl"></i>}</span><span className="text-[10px] text-theme-sub font-bold uppercase mt-1">{app.platform}</span></div>
-                <div className="flex flex-col items-center flex-1 border-r border-theme-border"><span className="font-black text-theme-text text-lg truncate max-w-[80px]">{app.latestVersion.replace(/^v/, '')}</span><span className="text-[10px] text-theme-sub font-bold uppercase mt-1">Version</span></div>
-                <div className="flex flex-col items-center flex-1"><span className="font-black text-theme-text text-lg">{app.size}</span><span className="text-[10px] text-theme-sub font-bold uppercase mt-1">Size</span></div>
+        <div className="px-6 mb-8">
+            <div className="flex items-center justify-between bg-card border border-theme-border rounded-3xl p-5 shadow-sm relative overflow-hidden group">
+                <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                <div className="flex flex-col items-center flex-1 border-r border-theme-border/50 relative z-10">
+                    <span className="font-black text-theme-text text-xl mb-1">{app.platform === Platform.ANDROID ? <i className="fab fa-android text-green-500"></i> : <i className="fab fa-windows text-blue-500"></i>}</span>
+                    <span className="text-[9px] text-theme-sub font-black uppercase tracking-widest">{app.platform}</span>
+                </div>
+                <div className="flex flex-col items-center flex-1 border-r border-theme-border/50 relative z-10 px-2 text-center">
+                    <span className="font-black text-theme-text text-xl mb-1 truncate max-w-full">{app.latestVersion.replace(/^v/, '')}</span>
+                    <span className="text-[9px] text-theme-sub font-black uppercase tracking-widest">Version</span>
+                </div>
+                <div className="flex flex-col items-center flex-1 relative z-10">
+                    <span className="font-black text-theme-text text-xl mb-1">{app.size}</span>
+                    <span className="text-[9px] text-theme-sub font-black uppercase tracking-widest">Size</span>
+                </div>
             </div>
         </div>
 
-        {app.repoUrl && app.repoUrl !== '#' && (
-            <div className="px-6 mb-6">
-                <button 
-                    onClick={() => {
-                        Haptics.selectionStart();
-                        window.open(app.repoUrl, '_blank');
-                    }}
-                    className="w-full py-4 bg-card border border-theme-border rounded-2xl flex items-center justify-center gap-3 hover:bg-theme-element transition-all active:scale-[0.98] shadow-sm group"
-                >
-                    <i className="fab fa-github text-2xl text-theme-text group-hover:scale-110 transition-transform"></i>
-                    <span className="font-bold text-theme-text">Show Repository</span>
-                </button>
-            </div>
-        )}
+
 
         <div className="mb-8"><h3 className="px-6 text-lg font-bold text-theme-text mb-4">Preview</h3><div className="flex gap-4 overflow-x-auto px-6 pb-4 no-scrollbar snap-x">{app.screenshots.map((src, idx) => <LazyScreenshot key={idx} src={src} index={idx} platform={app.platform} />)}</div></div>
         <div className="px-6 mb-8"><h3 className="text-lg font-bold text-theme-text mb-3">About this app</h3><p className="text-theme-sub leading-relaxed whitespace-pre-wrap font-medium text-sm">{app.description}</p></div>
@@ -334,12 +352,14 @@ const AppDetail: React.FC<AppDetailProps> = ({
                 {isInstalled && <div className="flex justify-between items-center py-3 border-b border-theme-border"><span className="text-theme-sub font-medium text-sm">Installed Version</span><span className="text-theme-text font-bold text-sm">{localVersion}</span></div>}
                 <div className="flex justify-between items-center py-3 border-b border-theme-border"><span className="text-theme-sub font-medium text-sm">Developer</span><span className="text-theme-text font-bold text-sm text-primary">{app.author}</span></div>
                  <div className="flex justify-between items-center py-3 border-b border-theme-border"><span className="text-theme-sub font-medium text-sm">Size</span><span className="text-theme-text font-bold text-sm">{app.size}</span></div>
-                 {app.githubRepo && <div className="flex justify-between items-center py-3 border-b border-theme-border"><span className="text-theme-sub font-medium text-sm">Source</span><span className="text-theme-text font-mono text-xs opacity-70 truncate max-w-[150px]">{app.githubRepo}</span></div>}
+
                  {app.packageName && <div className="flex justify-between items-center py-3 border-b border-theme-border"><span className="text-theme-sub font-medium text-sm">Package</span><span className="text-theme-text font-mono text-xs opacity-70 truncate max-w-[150px]">{app.packageName}</span></div>}
             </div>
         </div>
       </div>
-      <div className="absolute bottom-0 left-0 right-0 p-6 bg-surface/90 backdrop-blur-xl border-t border-theme-border z-20">{renderActionButton()}</div>
+      <div className="fixed bottom-0 left-0 right-0 p-6 pb-[calc(1.5rem+env(safe-area-inset-bottom))] bg-surface/80 backdrop-blur-2xl border-t border-white/5 z-20 shadow-[0_-8px_30px_rgba(0,0,0,0.05)]">
+        {renderActionButton()}
+      </div>
       
       {showCleanupPrompt && (
         <div className="absolute inset-0 z-[110] flex items-center justify-center p-6 bg-black/70 backdrop-blur-md animate-fade-in">
