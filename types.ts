@@ -38,6 +38,7 @@ export interface AppItem {
   isInstalled?: boolean;
   releaseKeyword?: string; // Used to match assets in GitHub Releases
   packageName?: string; // Android Package Name (e.g., com.google.android.youtube)
+  slug?: string; // URL slug for direct linking
 }
 
 export interface SocialLinks {

@@ -307,6 +307,47 @@ const App: React.FC = () => {
   });
   
   const [theme, setTheme] = useState<Theme>(() => (safeStorage.getItem('theme_preference') as Theme) || 'light');
+  
+  // --- URL ROUTING LOGIC (Query Parameters) ---
+  useEffect(() => {
+    const handleUrlChange = () => {
+        const params = new URLSearchParams(window.location.search);
+        const slug = params.get('app');
+        if (slug) {
+            const app = appsRef.current.find(a => (a.slug && a.slug === slug) || a.id === slug);
+            if (app) {
+                if (!selectedApp || selectedApp.id !== app.id) {
+                    setSelectedApp(app);
+                }
+            } else {
+                setSelectedApp(null);
+            }
+        } else {
+            if (selectedApp) setSelectedApp(null);
+        }
+    };
+
+    handleUrlChange();
+    window.addEventListener('popstate', handleUrlChange);
+    return () => window.removeEventListener('popstate', handleUrlChange);
+  }, [apps, importedApps]);
+
+  useEffect(() => {
+      const params = new URLSearchParams(window.location.search);
+      const currentApp = params.get('app');
+      
+      if (selectedApp) {
+          const slug = selectedApp.slug || selectedApp.id;
+          if (currentApp !== slug) {
+              params.set('app', slug);
+              window.history.pushState({ appId: selectedApp.id }, '', `?${params.toString()}`);
+          }
+      } else if (currentApp) {
+          params.delete('app');
+          const newSearch = params.toString();
+          window.history.pushState({}, '', newSearch ? `?${newSearch}` : window.location.pathname);
+      }
+  }, [selectedApp]);
 
   // --- INITIALIZE NATIVE SERVICES ---
   useEffect(() => {

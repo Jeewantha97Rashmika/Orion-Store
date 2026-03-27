@@ -17,6 +17,7 @@ export const localAppsData: AppItem[] = [
       'assets/home.PNG',
       'assets/dark.PNG'
     ],
-    packageName: 'com.pretub.store'
+    packageName: 'com.pretub.store',
+    slug: 'pretub-store'
   }
 ];
