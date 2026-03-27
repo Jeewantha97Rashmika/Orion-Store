@@ -83,8 +83,8 @@ export const STORE_PACKAGES: StorePackage[] = [
     tier: PackageTier.STARTER,
     name: 'Starter Bundle',
     price: '$19.99',
-    sellPrice: '$9.99',
-    discount: '50% OFF',
+    sellPrice: '$4.99',
+    discount: '75% OFF',
     checkoutUrl: `${WOO_CHECKOUT_URL}918`, // Replace 101 with WooCommerce Product ID
     description: 'Perfect for casual users who want a clean app store experience.',
     features: [
@@ -99,8 +99,8 @@ export const STORE_PACKAGES: StorePackage[] = [
     tier: PackageTier.PRO,
     name: 'Pro Collector',
     price: '$39.99',
-    sellPrice: '$19.99',
-    discount: '50% OFF',
+    sellPrice: '$9.99',
+    discount: '75% OFF',
     checkoutUrl: `${WOO_CHECKOUT_URL}919`, // Replace 102 with WooCommerce Product ID
     description: 'Unlock premium mods and advanced developer features.',
     recommended: true,
@@ -116,8 +116,8 @@ export const STORE_PACKAGES: StorePackage[] = [
     tier: PackageTier.ELITE,
     name: 'Elite Guardian',
     price: '$79.99',
-    sellPrice: '$39.99',
-    discount: '50% OFF',
+    sellPrice: '$19.99',
+    discount: '75% OFF',
     checkoutUrl: `${WOO_CHECKOUT_URL}920`, // Replace 103 with WooCommerce Product ID
     description: 'The ultimate toolkit for power users. All-in-one access.',
     features: [
